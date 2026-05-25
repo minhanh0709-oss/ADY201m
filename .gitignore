@@ -1,0 +1,80 @@
+# Audit log — submitted via LMS only
+**/AI_AuditLog*
+**/audit_evidence/
+dashboard/fill_audit_log.py
+dashboard/audit_entries.py
+dashboard/generate_audit_evidence.py
+_setup_github_release.py
+dashboard/_verify_audit_log.py
+dashboard/_check_group5.py
+dashboard/_audit_log_extract.txt
+dashboard/_template_layout.txt
+**/*Guideline*ADY201m*.pdf
+
+# Data (large / licensed — download separately)
+data/raw/*
+!data/raw/README.md
+data/processed/*
+!data/processed/README.md
+!data/processed/sample_*.csv
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+
+# LaTeX build
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.bbl
+*.blg
+
+# Archives & drafts (local only)
+*.zip
+*.7z
+OVERLEAF*
+Paper_*.zip
+ProjectPlanning*.zip
+Group11_*Overleaf.zip
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Large binaries / model artifacts
+*.pkl
+*.npz
+*.npy
+*.pt
+*.pth
+
+# Excel (audit / raw spreadsheets)
+*.xlsx
+
+# Course PDFs (local reference)
+SU2026_*.pdf
+data/AI2009_*.pdf
+
+# Legacy / duplicate paper folders (use report/ instead)
+paper_sn/
+paper_latex/
+sn_template_preview/
+template_latex/
+Conference-LaTeX-template_*/
+project_planning/
+project_planning_v2/
+project_planning_v3/
+
+# Root clutter
+ChatGPT*.png
+make_paper_zip.py
+DIAGNOSTIC_REPORT.md
+PAPER_*.md
+*_extract.txt
