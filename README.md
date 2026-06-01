@@ -14,9 +14,9 @@ python -m venv .venv
 pip install -r requirements.txt
 
 # 1. Download raw data → data/raw/ (see data/raw/README.md)
-python src/02_data_cleaning.py
-python src/04_feature_engineering.py
-python src/22b_build_windows_5fold.py
+python src/data_cleaning.py
+python src/feature_engineering.py
+python src/build_walkforward_windows.py
 
 # 2. SQL analysis (DuckDB)
 jupyter notebook notebooks/02_sql_analysis.ipynb
@@ -85,11 +85,11 @@ Run: `python dashboard/app.py`
 
 | ADY201m Requirement | Repository Evidence |
 |---|---|
-| Data ingestion, cleaning, EDA, feature engineering, model | `notebooks/01_data_cleaning.ipynb`, `src/02_data_cleaning.py`, `src/04_feature_engineering.py`, `src/` |
+| Data ingestion, cleaning, EDA, feature engineering, model | `notebooks/01_data_cleaning.ipynb`, `src/data_cleaning.py`, `src/feature_engineering.py` |
 | SQL analysis | `sql/`, `notebooks/02_sql_analysis.ipynb` |
 | At least 5 ML models | `results/tables/main_model_comparison.csv` (17 models) |
-| Regression analysis | `notebooks/03_model_benchmark.ipynb`, `src/30–33_models_*.py` |
-| Visualization | `results/figures/`, `report/figures/` |
+| Regression analysis | `notebooks/03_model_benchmark.ipynb`, `src/models_*.py` |
+| Visualization | `results/figures/` (single copy — no duplicate in `report/`) |
 | Dashboard / tool | `dashboard/` (RFM matrix, CLV forecast, VIP list) |
 | Final report (Springer 10–12 pp.) | `report/CLV_Prediction_Framework.pdf` |
 | AI Audit Log | **Submitted separately via LMS** (not in this repo) |

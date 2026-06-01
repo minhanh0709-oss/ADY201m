@@ -488,7 +488,7 @@ A Window-3 profit simulation (20\% margin, \$3/contact) yields
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.9\textwidth]{figures/fig5_ablation.png}
+\includegraphics[width=0.9\textwidth]{../results/figures/fig5_ablation.png}
 \caption{Feature group ablation study across all three walk-forward windows
 (Hurdle Model with Optuna-tuned LightGBM). Error bars show window-to-window
 variation. Adding monthly sequence features yields the single largest mean
@@ -521,7 +521,7 @@ discrimination).
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\columnwidth]{figures/fig7_importance.png}
+\includegraphics[width=\columnwidth]{../results/figures/fig7_importance.png}
 \caption{Top 15 features by permutation importance for the Hurdle Model
 on Window~3. Monetary leads (0.037), followed by M/T and
 \texttt{seq\_recent3\_mean}; sequence features cumulatively account for
@@ -589,7 +589,7 @@ coverage.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\columnwidth]{figures/fig_cqr_alpha05.png}
+\includegraphics[width=\columnwidth]{../results/figures/fig_cqr_alpha05.png}
 \caption{Conformalized Quantile Regression (CQR) coverage at
 $\alpha{=}0.05$ (95\% target) across five walk-forward windows. Left:
 raw-quantile vs.\ conformal-adjusted coverage, with the 95\% target.

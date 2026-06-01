@@ -72,7 +72,9 @@ project_planning/
 project_planning_v2/
 project_planning_v3/
 
-# Root clutter
+report/figures/
+presentation/_slide_charts/
+scripts/
 ChatGPT*.png
 make_paper_zip.py
 DIAGNOSTIC_REPORT.md

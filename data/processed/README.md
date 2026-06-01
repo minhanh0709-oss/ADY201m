@@ -15,9 +15,9 @@ A small sample for inspection is committed as `sample_window_3_features.csv` (fi
 ## Regenerate
 
 ```bash
-python src/02_data_cleaning.py
-python src/04_feature_engineering.py
-python src/22b_build_windows_5fold.py
+python src/data_cleaning.py
+python src/feature_engineering.py
+python src/build_walkforward_windows.py
 ```
 
 See [docs/reproduction_guide.md](../docs/reproduction_guide.md).

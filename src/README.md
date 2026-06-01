@@ -1,25 +1,41 @@
 # Python pipeline scripts
 
-Numbered scripts run in pipeline order. See [docs/reproduction_guide.md](../docs/reproduction_guide.md) for the full execution guide.
+Scripts use **descriptive names** (no numeric prefixes). Run in this order:
 
-## Core path (minimum reproduction)
+## Core pipeline
 
-```
-02_data_cleaning.py → 04_feature_engineering.py → 22b_build_windows_5fold.py
-→ 30_models_baselines.py → 31_models_gbm.py → 33_models_hurdle.py
-→ 70_final_comparison_v2.py
-```
+| Step | Script | Output |
+|------|--------|--------|
+| Download | `data_download.py` | `data/raw/online_retail_II.xlsx` |
+| Clean | `data_cleaning.py` | `data/processed/online_retail_cleaned.csv` |
+| EDA | `eda.py` | exploratory figures |
+| Features | `feature_engineering.py` | customer-level features |
+| Labels | `clv_labels.py` | 90-day forward CLV labels |
+| Windows | `build_walkforward_windows.py` | `window_*_features.csv` |
 
-## Key modules
+## Models (walk-forward)
 
-| Script | Role |
-|--------|------|
-| `02_data_cleaning.py` | Transaction cleaning |
-| `04_feature_engineering.py` | RFM + behavioral features |
-| `22b_build_windows_5fold.py` | Walk-forward window splits |
-| `30–33, 32, 60–62` | Model training (baselines → DL) |
-| `70_final_comparison_v2.py` | Aggregate `MASTER_TABLE.csv` |
-| `18b_conformal_hurdle_alpha05.py` | CQR prediction intervals |
-| `93_profit_simulation.py` | VIP profit simulation |
+| Script | Models |
+|--------|--------|
+| `models_baselines.py` | Mean, Monetary, RFM, BG/NBD+GG |
+| `models_gbm.py` | XGBoost, LightGBM variants |
+| `models_hurdle.py` | Two-stage Hurdle (proposed) |
+| `models_ziln.py` | ZILN deep learning |
+| `models_optdist.py` | OptDist |
+| `models_mcd.py` | MCD-ZILN |
+| `models_drnn.py` | Dilated RNN |
+| `final_model_comparison.py` | Aggregate → `results/MASTER_TABLE.csv` |
 
-Diagnostic scripts (`99_*`, `_*.py`) are for local debugging only.
+## Extensions
+
+| Script | Purpose |
+|--------|---------|
+| `product_graph.py` | Product co-purchase embeddings |
+| `customer_semantic_features.py` | Semantic features per window |
+| `hurdle_semantic.py` | Hurdle + semantic variants |
+| `conformal_cqr.py` | CQR prediction intervals |
+| `profit_simulation.py` | VIP campaign simulation |
+| `shap_hurdle.py` | SHAP interpretability |
+| `run_experiments.py` | Batch runner for semantic + CQR + dRNN |
+
+See [docs/reproduction_guide.md](../docs/reproduction_guide.md) for full details.

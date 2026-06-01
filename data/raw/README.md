@@ -12,7 +12,7 @@ Raw data is **not included** in this repository (file size and UCI licensing).
 Run data cleaning:
 
 ```bash
-python src/02_data_cleaning.py
+python src/data_cleaning.py
 ```
 
 Or open `notebooks/01_data_cleaning.ipynb`.
