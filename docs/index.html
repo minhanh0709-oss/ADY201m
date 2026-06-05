@@ -126,9 +126,24 @@
      before the split, targets reside strictly after. Window 3 (18-month observation /
      6-month horizon) is the primary deployment setting.</p>
   <figure class="figure">
-    <img src="assets/fig1_pipeline.png" alt="CLV pipeline diagram" loading="lazy" />
-    <figcaption>Figure 1 — Pipeline: cleaning → walk-forward split → features → semantic
-      embedding → two-stage Hurdle core → conformal calibration.</figcaption>
+    <div class="figtitle">Figure 1 · Research Pipeline for CLV Prediction</div>
+    <div class="pipeline">
+      <div class="stage" style="--c:#dcdee0"><b>Online Retail II</b><span>Dataset</span></div>
+      <div class="arrow">→</div>
+      <div class="stage" style="--c:#f6d877"><b>Data Cleaning</b><span>805K transactions</span></div>
+      <div class="arrow">→</div>
+      <div class="stage" style="--c:#a7e0a0"><b>Feature Engineering</b><span>RFM + Behavioral + Sequence</span></div>
+      <div class="arrow">→</div>
+      <div class="stage" style="--c:#8ec5ef"><b>Walk-Forward CV</b><span>Temporal windows</span></div>
+      <div class="arrow">→</div>
+      <div class="stage" style="--c:#d6a9e6"><b>Model Training</b><span>17 models compared</span></div>
+      <div class="arrow">→</div>
+      <div class="stage" style="--c:#f6a980"><b>Evaluation</b><span>Norm Gini · Top-K · MAPE</span></div>
+      <div class="arrow">→</div>
+      <div class="stage" style="--c:#6fc7bf"><b>VIP Targeting</b><span>+ SHAP Analysis</span></div>
+    </div>
+    <figcaption>Figure 1 — Pipeline: cleaning → walk-forward split → features →
+      two-stage Hurdle core → evaluation → VIP targeting with SHAP.</figcaption>
   </figure>
   <div class="grid2" style="margin-top:18px">
     <figure class="figure">

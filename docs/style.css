@@ -71,6 +71,21 @@ section{padding:54px 0; border-bottom:1px solid var(--line)}
         padding:14px; box-shadow:0 6px 20px rgba(20,35,59,.05); margin-top:6px}
 .figure img{width:100%; border-radius:10px; display:block}
 .figure figcaption{color:var(--muted); font-size:.85rem; margin-top:10px; text-align:center}
+.figtitle{font-weight:700; color:var(--navy); text-align:center; margin:4px 0 16px; font-size:1.02rem}
+
+/* HTML pipeline diagram (replaces fig1 image) */
+.pipeline{display:flex; flex-wrap:wrap; align-items:stretch; justify-content:center; gap:6px; padding:6px 4px 12px}
+.pipeline .stage{flex:1 1 92px; min-width:92px; min-height:120px; background:var(--c,#eee);
+  border-radius:11px; padding:12px 6px; text-align:center; color:#15212e;
+  display:flex; flex-direction:column; justify-content:center;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.07)}
+.pipeline .stage b{font-size:.82rem; line-height:1.2}
+.pipeline .stage span{font-size:.69rem; color:#33414f; margin-top:6px; line-height:1.18}
+.pipeline .arrow{display:flex; align-items:center; color:var(--accent); font-weight:800; font-size:1.1rem; flex:0 0 auto}
+@media(max-width:780px){
+  .pipeline .stage{flex-basis:100%}
+  .pipeline .arrow{width:100%; justify-content:center; transform:rotate(90deg)}
+}
 
 .pill{display:inline-block; background:#eef3fb; color:var(--navy2); border-radius:999px;
       padding:3px 11px; font-size:.78rem; font-weight:600; margin:3px 4px 0 0}
