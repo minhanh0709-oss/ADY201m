@@ -1,0 +1,7 @@
+Strategy,Revenue_Captured,Percent_Total,Lift_vs_Random
+Random,"$454,138",11.07%,110.69x
+Monetary-based,"$2,554,806",62.27%,622.72x
+RFM Score,"$2,394,356",58.36%,583.61x
+Frequency-based,"$2,349,065",57.26%,572.57x
+ML Prediction,"$2,578,680",62.85%,628.54x
+Oracle (Perfect),"$2,915,150",71.06%,710.55x

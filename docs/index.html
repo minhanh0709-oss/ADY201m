@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Explainable & Calibrated CLV Prediction — Group 11</title>
+<meta name="description" content="Explainable and Calibrated Customer Lifetime Value prediction for VIP targeting with semantic customer profiling — ADY201m, Group 11, FPT University." />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="container">
+    <div class="brand">CLV<span>·</span>VIP Targeting</div>
+    <a class="link" href="#overview">Overview</a>
+    <a class="link" href="#problem">Problem</a>
+    <a class="link" href="#data">Data</a>
+    <a class="link" href="#method">Method</a>
+    <a class="link" href="#results">Results</a>
+    <a class="link" href="#vip">VIP &amp; ROI</a>
+    <a class="link" href="#explain">Explainability</a>
+    <a class="link" href="#dashboard">Dashboard</a>
+    <a class="link" href="#downloads">Downloads</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="container">
+    <div class="eyebrow">ADY201m · Conference Preview &amp; Project</div>
+    <h1>Explainable &amp; Calibrated CLV Prediction for
+        <span class="accent">VIP Targeting</span> with Semantic Customer Profiling</h1>
+    <div class="divider"></div>
+    <p class="sub">A leakage-free, two-stage Hurdle framework that ranks the top-10% of
+       customers by future value — benchmarked across 17 models, calibrated with conformal
+       intervals, and explained with SHAP.</p>
+    <p class="meta"><b>Group 11</b> · FPT University &nbsp;|&nbsp; Python &amp; SQL (DuckDB)
+       &nbsp;|&nbsp; Dataset: <b>Online Retail II</b></p>
+
+    <div class="kpis">
+      <div class="kpi"><div class="v orange">805,549</div><div class="l">Transactions</div></div>
+      <div class="kpi"><div class="v blue">5,038</div><div class="l">Customers</div></div>
+      <div class="kpi"><div class="v">17</div><div class="l">Models Benchmarked</div></div>
+      <div class="kpi"><div class="v orange">+513%</div><div class="l">ROI vs Random</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ OVERVIEW ============ -->
+<section id="overview"><div class="container">
+  <div class="tag">Overview</div>
+  <h2 class="h">From Regression to a Ranking Problem</h2>
+  <p class="lead">Marketing budgets are constrained, yet a small fraction of customers drives
+     most of the revenue. We reframe Customer Lifetime Value (CLV) prediction as a
+     <b>top-K ranking problem</b>: identify the customers most likely to deliver the highest
+     future revenue so retention spend can be concentrated on them.</p>
+  <div class="grid3">
+    <div class="card accent"><h3>Best ranking</h3>
+      <div class="num">0.834</div>Normalized Gini (Hurdle) — ties the best deep model MCD-ZILN.</div>
+    <div class="card blue"><h3>Revenue capture</h3>
+      <div class="num">60.96%</div>of future revenue captured by contacting only the top-10%.</div>
+    <div class="card accent"><h3>Calibrated</h3>
+      <div class="num">95.2%</div>CQR interval coverage at 3.5× narrower width vs conformal MCD.</div>
+  </div>
+</div></section>
+
+<!-- ============ PROBLEM ============ -->
+<section id="problem"><div class="container">
+  <div class="tag">The Business Problem</div>
+  <h2 class="h">Why CLV Prediction Matters for VIP Targeting</h2>
+  <div class="grid2">
+    <div class="card">
+      <ul>
+        <li>Retailers operate with highly constrained marketing budgets → efficient allocation is essential.</li>
+        <li>Instead of generic blasting, prioritise high-value customers for exclusive VIP incentives.</li>
+        <li>VIP targeting shifts CLV from a pure regression task to a high-stakes <b>ranking optimization</b> problem.</li>
+      </ul>
+    </div>
+    <div class="card accent">
+      <h3>Core business question</h3>
+      <p style="font-size:1.12rem;color:var(--navy2);font-weight:600">
+        “Which top 10% of customers will capture the maximum future revenue share?”</p>
+      <div style="margin-top:10px">
+        <span class="pill">All active customers</span> →
+        <span class="pill best">Robust CLV ranking model</span> →
+        <span class="pill">Top-10% VIP group</span> →
+        <span class="pill">Targeted campaign</span>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ DATA ============ -->
+<section id="data"><div class="container">
+  <div class="tag">Data Foundations</div>
+  <h2 class="h">Online Retail II &amp; the Zero-Inflation Challenge</h2>
+  <p class="lead">Sourced from the UCI Machine Learning Repository: a UK-based non-store online
+     retailer, December 2009 – December 2011. Accounts without a registered identifier are
+     discarded to preserve sequence-tracking integrity.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3>Dataset at a glance</h3>
+      <ul>
+        <li><b>805,549</b> transactions · <b>5,038</b> customers · <b>41</b> countries</li>
+        <li><b>$17.7M</b> total revenue · median spend <b>$899</b></li>
+        <li>Cleaning: keep Quantity&gt;0 &amp; Price&gt;0, drop missing IDs, remove cancellations</li>
+      </ul>
+    </div>
+    <div class="card accent">
+      <h3>Statistical obstacles</h3>
+      <ul>
+        <li><b>42–67%</b> future zero-spend rate (dormant / single-time shoppers)</li>
+        <li>Skewness coefficient <b>22.95</b> (Window 3) — heavy right tail</li>
+        <li>→ Single-stage MSE regressors fail; a two-stage Hurdle model is required</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ METHOD ============ -->
+<section id="method"><div class="container">
+  <div class="tag">Methodology</div>
+  <h2 class="h">A Leakage-Free, Deployment-Oriented Pipeline</h2>
+  <p class="lead">Strict walk-forward windows emulate production: features are computed only
+     before the split, targets reside strictly after. Window 3 (18-month observation /
+     6-month horizon) is the primary deployment setting.</p>
+  <figure class="figure">
+    <img src="assets/fig1_pipeline.png" alt="CLV pipeline diagram" loading="lazy" />
+    <figcaption>Figure 1 — Pipeline: cleaning → walk-forward split → features → semantic
+      embedding → two-stage Hurdle core → conformal calibration.</figcaption>
+  </figure>
+  <div class="grid2" style="margin-top:18px">
+    <figure class="figure">
+      <img src="assets/fig2_temporal_split.png" alt="Temporal split" loading="lazy" />
+      <figcaption>Figure 2 — Leakage-free temporal windows (W1–W5).</figcaption>
+    </figure>
+    <div class="card blue">
+      <h3>Two-stage Hurdle (proposed)</h3>
+      <ul>
+        <li><b>Stage 1</b> — classifier estimates return probability <i>P(active)</i> for all customers.</li>
+        <li><b>Stage 2</b> — regressor estimates positive spend <i>E(revenue | active)</i>.</li>
+        <li>Predictions recombined multiplicatively → disentangles <i>whether</i> from <i>how much</i>.</li>
+        <li><b>CQR</b> calibration wraps each prediction in a 95% reliable interval.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ RESULTS ============ -->
+<section id="results"><div class="container">
+  <div class="tag">Ranking Results (Window 3)</div>
+  <h2 class="h">Systematic Benchmark of 17 Models</h2>
+  <p class="lead">Rather than claim dramatic supremacy, the proposed Hurdle model tracks the
+     ranking performance of complex deep-learning alternatives while keeping the model fully
+     explainable. Metrics are mean ± std across walk-forward folds.</p>
+  <figure class="figure">
+    <img src="assets/fig3_master_comparison.png" alt="17-model comparison" loading="lazy" />
+    <figcaption>Figure 3 — Discrimination (Normalized Gini) and business value (Revenue Capture)
+      across all 17 models.</figcaption>
+  </figure>
+  <div class="tablewrap" style="margin-top:18px">
+    <table>
+      <thead><tr><th>Model</th><th>MAE</th><th>R²</th><th>Norm. Gini</th><th>Revenue@10%</th><th>Lift@10%</th></tr></thead>
+      <tbody>
+        <tr class="best"><td>Hurdle Model (proposed)</td><td class="r">449.5</td><td class="r">0.494</td><td class="r">0.834</td><td class="r">60.96%</td><td class="r">6.10×</td></tr>
+        <tr><td>ZILN (Deep Learning)</td><td class="r">617.7</td><td class="r">−5.35</td><td class="r">0.833</td><td class="r">60.20%</td><td class="r">6.02×</td></tr>
+        <tr><td>Hurdle + Sequence</td><td class="r">456.9</td><td class="r">0.478</td><td class="r">0.833</td><td class="r">59.58%</td><td class="r">5.96×</td></tr>
+        <tr><td>XGBoost (raw)</td><td class="r">449.8</td><td class="r">0.537</td><td class="r">0.822</td><td class="r">58.85%</td><td class="r">5.88×</td></tr>
+        <tr><td>Monetary baseline</td><td class="r">522.4</td><td class="r">0.022</td><td class="r">0.822</td><td class="r">60.02%</td><td class="r">6.00×</td></tr>
+        <tr><td>Linear Regression</td><td class="r">456.0</td><td class="r">0.587</td><td class="r">0.810</td><td class="r">60.55%</td><td class="r">6.06×</td></tr>
+        <tr><td>RFM Score</td><td class="r">707.0</td><td class="r">0.047</td><td class="r">0.716</td><td class="r">52.68%</td><td class="r">5.27×</td></tr>
+        <tr><td>BG/NBD + Gamma-Gamma</td><td class="r">549.9</td><td class="r">0.667</td><td class="r">0.485</td><td class="r">3.23%</td><td class="r">0.32×</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lead" style="margin-top:12px;font-size:.9rem">
+    Note: BG/NBD attains the best raw R² but ranks poorly (NG 0.485) — confirming that raw
+    error metrics are misleading on a zero-inflated label. Ranking metrics drive model selection.</p>
+</div></section>
+
+<!-- ============ VIP / ROI ============ -->
+<section id="vip"><div class="container">
+  <div class="tag">VIP Target Valuation</div>
+  <h2 class="h">Marketing Impact &amp; Profit Simulation</h2>
+  <div class="grid2">
+    <figure class="figure">
+      <img src="assets/fig4_revenue_capture.png" alt="Revenue capture curve" loading="lazy" />
+      <figcaption>Figure 4 — Revenue captured at top-K%: Hurdle 60.8% vs Random 11.8% vs Oracle 72.2%.</figcaption>
+    </figure>
+    <div>
+      <div class="card accent">
+        <h3>Simulated campaign ROI (top-10% bracket)</h3>
+        <div class="tablewrap" style="margin-top:8px">
+          <table>
+            <thead><tr><th>Strategy</th><th>Revenue captured</th><th>% total</th></tr></thead>
+            <tbody>
+              <tr><td>Random selection</td><td class="r">$454,138</td><td class="r">11.07%</td></tr>
+              <tr class="best"><td>ML prediction (Hurdle)</td><td class="r">$2,578,680</td><td class="r">62.85%</td></tr>
+              <tr><td>Oracle (perfect)</td><td class="r">$2,915,150</td><td class="r">71.06%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin:12px 0 0">Net profit lift <b>+513%</b> vs random
+           (<b>$292,315</b> vs <b>$47,706</b>) · Precision@Top-10% = <b>0.597</b>.</p>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ EXPLAINABILITY ============ -->
+<section id="explain"><div class="container">
+  <div class="tag">Calibration &amp; Explainability</div>
+  <h2 class="h">Reliable Bounds, Transparent Drivers, Semantic Profiling</h2>
+  <div class="grid2">
+    <figure class="figure">
+      <img src="assets/fig6_decile.png" alt="Decile calibration" loading="lazy" />
+      <figcaption>Figure 6 — Decile calibration (Window 3, n = 986): predicted vs actual track closely.</figcaption>
+    </figure>
+    <figure class="figure">
+      <img src="assets/fig7_importance.png" alt="Feature importance" loading="lazy" />
+      <figcaption>Figure 7 — Permutation / SHAP importance: Monetary dominates, then M/T,
+        recent sequence activity, Recency.</figcaption>
+    </figure>
+  </div>
+  <div class="grid3" style="margin-top:18px">
+    <div class="card blue"><h3>Calibrated uncertainty</h3>
+      CQR-Hurdle reaches <b>95.2%</b> coverage at avg width <b>$1,607</b> — vs Conformal MCD
+      94.7% / $5,729 (<b>3.5× narrower</b>).</div>
+    <div class="card accent"><h3>Stage-wise SHAP</h3>
+      Stage 1 drivers: ActiveMonths, Recency, sequence activity. Stage 2 drivers: Monetary,
+      M/T ratio, historical baseline.</div>
+    <div class="card blue"><h3>Semantic taste profiling</h3>
+      Product co-purchase graph → 6 taste clusters. Orthogonal to RFM (ARI <b>0.032</b>),
+      CLV differs (ANOVA p = <b>4.5×10⁻⁵</b>). Honest claim: insight, not a lift booster.</div>
+  </div>
+  <figure class="figure" style="margin-top:18px">
+    <img src="assets/fig8_stability.png" alt="Stability across windows" loading="lazy" />
+    <figcaption>Figure 8 — Ranking stability across walk-forward windows.</figcaption>
+  </figure>
+</div></section>
+
+<!-- ============ DASHBOARD ============ -->
+<section id="dashboard"><div class="container">
+  <div class="tag">Analysis Tool</div>
+  <h2 class="h">Interactive Targeting Dashboard</h2>
+  <p class="lead">A four-page dashboard turns predictions into marketing actions: business
+     overview, RFM matrix drill-down, CLV forecast with calibrated intervals, and a live
+     campaign-targeting simulator with CSV export.</p>
+  <div class="grid2">
+    <figure class="figure"><img src="assets/dash_01_overview.png" alt="Overview page" loading="lazy" /><figcaption>1 · Business Overview — KPIs &amp; trends</figcaption></figure>
+    <figure class="figure"><img src="assets/dash_02_rfm.png" alt="RFM matrix page" loading="lazy" /><figcaption>2 · RFM Matrix — segment drill-down</figcaption></figure>
+    <figure class="figure"><img src="assets/dash_03_forecast.png" alt="CLV forecast page" loading="lazy" /><figcaption>3 · CLV Forecast — top VIPs + CQR intervals</figcaption></figure>
+    <figure class="figure"><img src="assets/dash_04_campaign.png" alt="Campaign targeting page" loading="lazy" /><figcaption>4 · Campaign Targeting — live profit simulation</figcaption></figure>
+  </div>
+</div></section>
+
+<!-- ============ DOWNLOADS ============ -->
+<section id="downloads"><div class="container">
+  <div class="tag">Downloads &amp; Reproducibility</div>
+  <h2 class="h">Artefacts</h2>
+  <p class="lead">All results are reproducible from the GitHub repository via the documented
+     pipeline scripts.</p>
+  <div class="dl">
+    <a class="btn orange" href="data/CLV_paper_preview.pdf">📄 Conference paper (PDF)</a>
+    <a class="btn" href="data/table_3_model_comparison.csv">⬇ Model comparison (CSV)</a>
+    <a class="btn" href="data/table_5_vip_targeting.csv">⬇ VIP targeting (CSV)</a>
+    <a class="btn" href="data/final_summary.csv">⬇ Full 17-model summary (CSV)</a>
+    <a class="btn ghost" href="https://github.com/minhanh0709-oss/ADY201m">⌂ GitHub repository</a>
+  </div>
+</div></section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div><b>Group 11 — FPT University</b> · ADY201m: AI &amp; Data Science</div>
+    <div class="small">Student: Nguyễn Vũ Minh Ánh (SE203412) · Supervisor: Nguyễn Hoàng Linh</div>
+    <div class="small">Explainable &amp; Calibrated CLV Prediction for VIP Targeting with Semantic Customer Profiling</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
