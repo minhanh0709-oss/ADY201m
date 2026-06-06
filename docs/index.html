@@ -6,6 +6,9 @@
 <title>Explainable & Calibrated CLV Prediction — Group 11</title>
 <meta name="description" content="Explainable and Calibrated Customer Lifetime Value prediction for VIP targeting with semantic customer profiling — ADY201m, Group 11, FPT University." />
 <link rel="stylesheet" href="style.css" />
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -13,6 +16,7 @@
 <nav class="nav">
   <div class="container">
     <div class="brand">CLV<span>·</span>VIP Targeting</div>
+    <a class="link" href="#live">Live Dashboard</a>
     <a class="link" href="#overview">Overview</a>
     <a class="link" href="#problem">Problem</a>
     <a class="link" href="#data">Data</a>
@@ -46,6 +50,42 @@
     </div>
   </div>
 </header>
+
+<!-- ============ LIVE INTERACTIVE DASHBOARD ============ -->
+<section id="live"><div class="container">
+  <div class="tag">Interactive Dashboard</div>
+  <h2 class="h">Live Analytics — Interact &amp; Upload Your Own Data</h2>
+  <p class="lead">Every chart below is fully interactive: <b>click a legend item</b> to hide/show
+     a series, <b>double-click</b> to isolate it, drag to zoom, hover for exact values.
+     <b>Upload an Online Retail II CSV/Excel file</b> and the whole dashboard is recomputed
+     live in your browser (RFM, segments, revenue, distributions) — nothing is sent to a server.</p>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="uploadbar">
+      <label class="btn orange" for="fileInput">⬆ Upload dataset (CSV / XLSX)</label>
+      <input id="fileInput" type="file" accept=".csv,.xlsx,.xls" hidden />
+      <button id="resetBtn" class="btn ghost" type="button">↺ Reset to project data</button>
+      <span id="status" class="status">Showing: project data (Online Retail II)</span>
+    </div>
+    <div id="dropZone" class="dropzone">… or drag &amp; drop a CSV / XLSX file here …</div>
+    <p class="hint">Expected columns: Invoice, StockCode, Quantity, InvoiceDate, Price,
+       Customer ID, Country (column order/case is flexible). Large files parse in a few seconds.</p>
+  </div>
+
+  <div class="kpis-light" id="liveKpis"></div>
+
+  <div class="card chartcard"><div id="chMonthly" class="chart"></div></div>
+  <div class="grid2">
+    <div class="card chartcard"><div id="chSeg" class="chart"></div></div>
+    <div class="card chartcard"><div id="chCountry" class="chart"></div></div>
+  </div>
+  <div class="grid2">
+    <div class="card chartcard"><div id="chScatter" class="chart"></div></div>
+    <div class="card chartcard"><div id="chHist" class="chart"></div></div>
+  </div>
+  <div class="card"><h3>Top-20 customers by Monetary</h3>
+    <div id="topTable" class="tablewrap"></div></div>
+</div></section>
 
 <!-- ============ OVERVIEW ============ -->
 <section id="overview"><div class="container">
@@ -295,5 +335,7 @@
 </footer>
 
 <script src="script.js"></script>
+<script src="default_data.js"></script>
+<script src="dashboard.js"></script>
 </body>
 </html>
