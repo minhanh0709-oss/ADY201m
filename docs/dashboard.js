@@ -12,10 +12,10 @@
   const PCONF = { responsive: true, displaylogo: false,
     modeBarButtonsToRemove: ["lasso2d", "select2d"] };
   const baseLayout = (extra) => Object.assign({
-    margin: { l: 55, r: 20, t: 46, b: 45 }, height: 360,
+    margin: { l: 60, r: 34, t: 50, b: 54 }, height: 360,
     paper_bgcolor: "white", plot_bgcolor: "white",
     font: { family: "Segoe UI, sans-serif", size: 12, color: "#1b2733" },
-    legend: { orientation: "h", y: -0.18 }
+    legend: { orientation: "h", y: -0.22, x: 0.5, xanchor: "center" }
   }, extra || {});
 
   const $ = (id) => document.getElementById(id);
@@ -41,9 +41,15 @@
         name: "Active customers", line: { color: "#d62728", width: 2.5 } }
     ], baseLayout({
       title: "Monthly Active Customers & Revenue",
-      xaxis: { title: "Month", gridcolor: "#eee" },
-      yaxis: { title: "Active customers", gridcolor: "#eee" },
-      yaxis2: { title: "Revenue ($)", overlaying: "y", side: "right", showgrid: false }
+      margin: { l: 64, r: 64, t: 50, b: 50 },
+      xaxis: { gridcolor: "#eee", automargin: true },
+      yaxis: { title: { text: "Active customers", standoff: 8 },
+               gridcolor: "#eee", automargin: true },
+      // NB: no title on the right overlaying axis — Plotly's automargin does not
+      // reserve space for an overlaying-axis title, so it collides with the ticks.
+      // The "$" tickprefix + the "Revenue ($)" legend already label this series.
+      yaxis2: { overlaying: "y", side: "right", showgrid: false,
+                tickprefix: "$", tickformat: "~s", automargin: true }
     }), PCONF);
   }
 
@@ -51,12 +57,13 @@
     const map = {}; segs.forEach(s => map[s.segment] = s.count);
     const traces = SEG_ORDER.filter(s => map[s] != null).map(s => ({
       type: "bar", x: [s], y: [map[s]], name: s,
-      marker: { color: SEG_COLOR[s] }, text: [map[s]], textposition: "outside"
+      marker: { color: SEG_COLOR[s] }, text: [map[s]], textposition: "outside",
+      cliponaxis: false
     }));
     Plotly.newPlot("chSeg", traces, baseLayout({
       title: "Customers by RFM Segment",
-      xaxis: { categoryorder: "array", categoryarray: SEG_ORDER },
-      yaxis: { title: "Customers", gridcolor: "#eee" }
+      xaxis: { categoryorder: "array", categoryarray: SEG_ORDER, automargin: true },
+      yaxis: { title: "Customers", gridcolor: "#eee", automargin: true }
     }), PCONF);
   }
 
@@ -70,8 +77,10 @@
       customdata: top.map(d => d.customers)
     }], baseLayout({
       title: "Revenue by Country (Top 15)", showlegend: false,
-      margin: { l: 120, r: 20, t: 46, b: 45 },
-      xaxis: { title: "Revenue ($)", gridcolor: "#eee" }, yaxis: { automargin: true }
+      margin: { l: 130, r: 24, t: 50, b: 48 },
+      xaxis: { title: "Revenue", tickprefix: "$", tickformat: "~s",
+               gridcolor: "#eee", automargin: true },
+      yaxis: { automargin: true }
     }), PCONF);
   }
 
@@ -87,8 +96,9 @@
     }).filter(t => t.x.length);
     Plotly.newPlot("chScatter", traces, baseLayout({
       title: "RFM Scatter — click a legend to filter",
-      xaxis: { title: "Recency (days)", gridcolor: "#eee" },
-      yaxis: { title: "Monetary ($, log)", type: "log", gridcolor: "#eee" }
+      xaxis: { title: "Recency (days)", gridcolor: "#eee", automargin: true },
+      yaxis: { title: "Monetary", type: "log", tickprefix: "$", tickformat: "~s",
+               gridcolor: "#eee", automargin: true }
     }), PCONF);
   }
 
@@ -98,8 +108,9 @@
       type: "histogram", x: v, marker: { color: "#6fc7bf" }, nbinsx: 40
     }], baseLayout({
       title: "Customer Monetary Distribution (log10 $)",
-      xaxis: { title: "log10(Monetary $)", gridcolor: "#eee" },
-      yaxis: { title: "Customers", gridcolor: "#eee" }, showlegend: false
+      xaxis: { title: "log10(Monetary $)", gridcolor: "#eee", automargin: true },
+      yaxis: { title: { text: "Customers", standoff: 8 },
+               gridcolor: "#eee", automargin: true }, showlegend: false
     }), PCONF);
   }
 
