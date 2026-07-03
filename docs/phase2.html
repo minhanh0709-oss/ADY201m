@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Phase 2 — Uplift-Aware Targeting Dashboard | Group 11</title>
+<meta name="description" content="Phase 2 live dashboard: CLV ranking, uplift learners, value-adjusted targeting policy, SHAP and conformal uncertainty across three retail datasets (Online Retail II, Dunnhumby, X5 RetailHero)."/>
+<link rel="stylesheet" href="style.css"/>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<style>
+  .p2grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:820px){.p2grid{grid-template-columns:1fr}}
+  .p2card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 14px 6px;box-shadow:0 1px 3px rgba(20,35,59,.05)}
+  .p2card h3{margin:.1rem 0 .2rem;color:var(--navy2);font-size:1.02rem}
+  .p2card .cap{color:var(--muted);font-size:.82rem;margin:0 0 6px}
+  .kpirow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:8px 0 26px}
+  @media(max-width:820px){.kpirow{grid-template-columns:repeat(2,1fr)}}
+  .k2{background:linear-gradient(180deg,#1f3a5f,#14233b);border-radius:14px;padding:16px 16px 14px;color:#fff}
+  .k2 .v{font-size:1.8rem;font-weight:800}
+  .k2 .v.blue{color:#7fb3ee}.k2 .v.orange{color:#f08a3c}.k2 .v.green{color:#7ee0a3}.k2 .v.red{color:#f39b8f}
+  .k2 .l{font-size:.68rem;letter-spacing:1px;text-transform:uppercase;color:#9fb0c6;margin-top:6px}
+  .k2 .s{font-size:.74rem;color:#c7d3e2;margin-top:3px}
+  .ctl{margin:6px 0 16px}.ctl select{padding:8px 12px;border-radius:8px;border:1px solid var(--line);font-size:.95rem}
+  .cqr{font-size:.82rem;color:var(--muted);padding:2px 6px 8px}
+  .plot{width:100%;height:340px}
+</style>
+</head><body>
+
+<nav class="nav"><div class="container">
+  <div class="brand">CLV<span>·</span>VIP Targeting</div>
+  <a class="link" href="index.html">&larr; Main site</a>
+  <a class="link" href="index.html#live">Phase 1 Dashboard</a>
+  <a class="link" href="#views">Phase 2 Views</a>
+</div></nav>
+
+<header class="hero"><div class="container">
+  <div class="eyebrow">Phase 2 &middot; Live Dashboard</div>
+  <h1>Uplift-Aware Targeting &mdash; Decision Report</h1>
+  <p class="sub">CLV ranks <b>who is valuable</b>, uplift estimates <b>who is persuadable</b>,
+  and value-adjusted uplift targets <b>who is worth targeting</b>. All numbers are the real
+  held-out results from the X5&nbsp;RetailHero RCT and the walk-forward CLV contexts.</p>
+  <div class="divider"></div>
+  <div class="kpirow">
+    <div class="k2"><div class="v blue" id="k-best"></div><div class="l">Best uplift model</div><div class="s" id="k-best-s"></div></div>
+    <div class="k2"><div class="v red" id="k-resp"></div><div class="l">Response model (Qini)</div><div class="s">below random &rarr; value &ne; persuadability</div></div>
+    <div class="k2"><div class="v orange" id="k-ov"></div><div class="l">Value vs Uplift overlap</div><div class="s">top-10% &mdash; nearly disjoint</div></div>
+    <div class="k2"><div class="v green" id="k-va"></div><div class="l">Value-adjusted profit</div><div class="s" id="k-va-s"></div></div>
+  </div>
+</div></header>
+
+<section id="views"><div class="container">
+  <div class="tag">Interactive &middot; Plotly</div>
+  <h2 class="h">Four decision views</h2>
+  <p class="lead">The same four views as the Python Dash app (route <code>/uplift</code>), rendered
+  client-side so the link works directly on GitHub Pages.</p>
+
+  <div class="ctl"><label>Explainability context (View 4):&nbsp;</label>
+    <select id="ctx"><option value="online_retail">Online Retail II (e-commerce)</option>
+    <option value="dunnhumby">Dunnhumby (grocery)</option></select></div>
+
+  <div class="p2grid">
+    <div class="p2card"><h3>1 &middot; Customer ranking (CLV + uplift)</h3>
+      <p class="cap">uplift@K by learner &mdash; response model ranks below random</p>
+      <div id="v1" class="plot"></div></div>
+    <div class="p2card"><h3>2 &middot; Policy comparison</h3>
+      <p class="cap">incremental revenue by policy (million rubles)</p>
+      <div id="v2" class="plot"></div></div>
+    <div class="p2card"><h3>3 &middot; Profit simulation</h3>
+      <p class="cap">held-out profit by policy (million rubles)</p>
+      <div id="v3" class="plot"></div></div>
+    <div class="p2card"><h3>4 &middot; Explainability &amp; uncertainty</h3>
+      <p class="cap">Stage-2 SHAP drivers &mdash; who, why, and with what risk</p>
+      <div id="v4" class="plot"></div><div class="cqr" id="cqr"></div></div>
+  </div>
+  <p class="lead" style="margin-top:22px">Source: <code>phase2/results/*.csv</code> in the repository.
+  The interactive Python version (with the K / margin / cost sliders) runs locally via
+  <code>python dashboard/app.py</code> &rarr; <code>http://127.0.0.1:8050/uplift</code>.</p>
+</div></section>
+
+<footer style="background:#14233b;color:#9fb0c6;padding:26px 0;text-align:center;font-size:.85rem">
+  <div class="container">ADY201m &middot; Group 11 &middot; Phase 2: Uplift-aware targeting across Online Retail II, Dunnhumby &amp; X5 RetailHero</div>
+</footer>
+
+<script>
+const D = {"uplift": {"S-Learner": [0.1117, 0.0775, 0.0601], "X-Learner": [0.1042, 0.0721, 0.0604], "T-Learner": [0.0872, 0.0689, 0.0646], "ClassTransform": [0.0861, 0.0643, 0.0522], "Random": [0.0262, 0.0289, 0.026], "ResponseModel": [0.0038, 0.0082, 0.0169]}, "modelColors": {"S-Learner": "#2f7ed8", "X-Learner": "#e05a1f", "T-Learner": "#27ae60", "ClassTransform": "#8e44ad", "Random": "#e0a458", "ResponseModel": "#c0392b"}, "policies": ["Random", "RFM-only", "Value-only(CLV proxy)", "Uplift-only(S-Learner)", "Value-adjusted(uplift x value)"], "policyColors": {"Random": "#c0392b", "RFM-only": "#e67e22", "Value-only(CLV proxy)": "#f1c40f", "Uplift-only(S-Learner)": "#27ae60", "Value-adjusted(uplift x value)": "#2f7ed8"}, "K": [10, 20, 30], "incrValue": {"Random": [0.29191, 0.132712, -1.223766], "RFM-only": [0.106004, 1.955936, 2.709754], "Value-only(CLV proxy)": [-0.049218, 4.558873, 5.854634], "Uplift-only(S-Learner)": [1.089826, 3.230997, 3.695055], "Value-adjusted(uplift x value)": [1.339577, 5.232658, 4.9565]}, "profit": {"Random": [-0.30819, -1.067488, -3.024066], "RFM-only": [-0.494096, 0.755736, 0.909454], "Value-only(CLV proxy)": [-0.649318, 3.358673, 4.054334], "Uplift-only(S-Learner)": [0.489726, 2.030797, 1.894755], "Value-adjusted(uplift x value)": [0.739477, 4.032458, 3.1562]}, "shap": {"online_retail": {"feature": ["monetary", "seq_spend_recent_half", "spend_per_active_day", "avg_order_value", "sem_emb_2", "avg_basket_size", "sem_emb_1", "sem_emb_26", "sem_emb_5", "seq_spend_last_period"], "value": [0.2242, 0.0987, 0.0552, 0.0432, 0.0286, 0.0285, 0.0223, 0.0215, 0.0206, 0.0181]}, "dunnhumby": {"feature": ["seq_spend_recent_half", "recency_days", "monetary", "avg_order_value", "sem_taste_drift", "seq_active_periods", "regularity", "sem_emb_17", "seq_recent_vs_older_ratio", "category_diversity"], "value": [0.3748, 0.0693, 0.0382, 0.0266, 0.0227, 0.0212, 0.02, 0.0182, 0.0175, 0.0163]}}, "cqr": {"online_retail": [{"nominal": 0.9, "emp": 0.9018, "width": 1653.48}, {"nominal": 0.8, "emp": 0.7927, "width": 1314.85}], "dunnhumby": [{"nominal": 0.9, "emp": 0.89, "width": 707.16}, {"nominal": 0.8, "emp": 0.778, "width": 514.53}]}};
+const K = {"best": "S-Learner", "bestQ": 0.0136, "resp": -0.0071, "overlap": 0.007, "vaProfit": 4.03, "vaK": "20%"};
+const L = {plot_bgcolor:'#fff', paper_bgcolor:'#fff', font:{family:'Segoe UI,Roboto,Arial', size:12, color:'#1b2733'},
+  margin:{l:52,r:14,t:10,b:70}, legend:{orientation:'h', y:-0.25, font:{size:10}}, xaxis:{gridcolor:'#eef2f7'}, yaxis:{gridcolor:'#eef2f7'}};
+const CFG = {displaylogo:false, responsive:true};
+
+// KPI
+document.getElementById('k-best').textContent = K.best.split('-')[0];
+document.getElementById('k-best-s').textContent = 'Qini ' + K.bestQ.toFixed(4) + ' (held-out RCT)';
+document.getElementById('k-resp').textContent = K.resp.toFixed(4);
+document.getElementById('k-ov').textContent = K.overlap.toFixed(3);
+document.getElementById('k-va').textContent = K.vaProfit.toFixed(2) + ' M';
+document.getElementById('k-va-s').textContent = 'best at K=' + K.vaK + ' (rubles)';
+
+// View 1 — uplift@K by model
+Plotly.newPlot('v1', Object.keys(D.uplift).map(m => ({
+  x:['10%','20%','30%'], y:D.uplift[m], name:m, mode:'lines+markers',
+  line:{color:D.modelColors[m]}, marker:{color:D.modelColors[m]}})),
+  Object.assign({}, L, {yaxis:{title:'uplift@K (incremental)', gridcolor:'#eef2f7'}, xaxis:{title:'Top-K% targeted', gridcolor:'#eef2f7'}}), CFG);
+
+function policyTraces(key){ return D.policies.map(p => ({
+  x:D.K, y:D[key][p], name:p, mode:'lines+markers',
+  line:{color:D.policyColors[p]}, marker:{color:D.policyColors[p]}})); }
+
+// View 2 — incremental revenue
+Plotly.newPlot('v2', policyTraces('incrValue'),
+  Object.assign({}, L, {yaxis:{title:'Incremental revenue (M)', gridcolor:'#eef2f7'}, xaxis:{title:'Top-K% targeted', tickvals:[10,20,30], gridcolor:'#eef2f7'}}), CFG);
+
+// View 3 — profit (with zero line)
+Plotly.newPlot('v3', policyTraces('profit'),
+  Object.assign({}, L, {yaxis:{title:'Held-out profit (M)', gridcolor:'#eef2f7', zeroline:true, zerolinecolor:'#aaa'},
+  xaxis:{title:'Top-K% targeted', tickvals:[10,20,30], gridcolor:'#eef2f7'},
+  shapes:[{type:'line', x0:10, x1:30, y0:0, y1:0, line:{color:'#888', dash:'dot'}}]}), CFG);
+
+// View 4 — SHAP + CQR (context toggle)
+function drawShap(ctx){
+  const s = D.shap[ctx];
+  Plotly.newPlot('v4', [{type:'bar', orientation:'h', x:s.value.slice().reverse(), y:s.feature.slice().reverse(),
+    marker:{color:'#2f7ed8'}}], Object.assign({}, L, {margin:{l:150,r:14,t:10,b:44},
+    xaxis:{title:'mean |SHAP| (normalised)', gridcolor:'#eef2f7'}, yaxis:{automargin:true}}), CFG);
+  const c = D.cqr[ctx].map(r => 'CQR nominal '+Math.round(r.nominal*100)+'% &rarr; empirical '+(r.emp*100).toFixed(1)+'% (mean width '+Math.round(r.width).toLocaleString()+')').join(' &nbsp;|&nbsp; ');
+  document.getElementById('cqr').innerHTML = '<b>Uncertainty:</b> '+c+' &mdash; coverage close to nominal, so each customer\'s interval is trustworthy for risk-aware targeting.';
+}
+drawShap('online_retail');
+document.getElementById('ctx').addEventListener('change', e => drawShap(e.target.value));
+</script>
+</body></html>
