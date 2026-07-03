@@ -79,7 +79,7 @@
     <p class="hint">Columns matched flexibly (<code>treatment_flg</code>, <code>target</code>,
     <code>monetary</code> all work). &#9654; Try it:
     <a href="data/phase2_demo.csv" download><b>download the demo file</b></a>
-    (real X5 sample, 15k rows).</p>
+    (full X5 held-out test set, 60k rows).</p>
     <div class="sliders">
       <label>Contact cost&nbsp;<output id="costO">100</output>
         <input id="cost" type="range" min="0" max="300" step="10" value="100"/></label>
@@ -250,7 +250,7 @@ const dz=document.getElementById('dropZone');
 dz.addEventListener('drop',e=>{if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0]);});
 cost_.addEventListener('input',()=>RAW&&render());margin_.addEventListener('input',()=>RAW&&render());
 function loadDemo(){document.getElementById('status').textContent='Loading project data…';
-  Papa.parse(DEMO,{header:true,download:true,skipEmptyLines:true,complete:r=>loadTable(r.data,'project data (X5 RetailHero sample)')});}
+  Papa.parse(DEMO,{header:true,download:true,skipEmptyLines:true,complete:r=>loadTable(r.data,'project data (X5 RetailHero held-out test set)')});}
 document.getElementById('resetBtn').addEventListener('click',loadDemo);
 loadDemo();
 </script>
