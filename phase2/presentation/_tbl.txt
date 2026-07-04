@@ -1,0 +1,20 @@
+== S3 Problem ==
+Evaluation Criteria | Phase 2 — Cross-Context Targeting
+Describe the problem | Retailers can rank customers by predicte
+State the analysis objective | Connect CLV ranking with uplift-aware ta
+Justify the approach | Two-stage Hurdle CLV for ranking, meta-l
+Cite 1–2 reliable sources | Ascarza (2018, JMR); Künzel et al. (2019
+AI Audit Log required | 20 logged sessions (P2-01–P2-20) documen
+== S8 SQL goals ==
+Query → RQ | Representative SQL (DuckDB) | Insight
+Q1 · RFM + value proxy → RQ1/RQ4 | SELECT CustomerID, MAX(date), COUNT(*),  | Per-customer recency / frequency / monet
+Q2 · Walk-forward windows → RQ1/RQ2 | WITH past AS (… < cutoff), fut AS (… >=  | Leakage-free past features versus the fu
+Q3 · Treatment cohorts → RQ3/RQ4 | SELECT client, treatment_flag, MAX(conve | Aligned treated / control outcomes for u
+== S13 Regression ==
+What to present | Phase 2 detail
+Model choice rationale | Zero-inflated, heavy-tailed CLV calls fo
+Dependent & independent | CLV: target = future 6-month value; feat
+Compare ≥ 5 models | CLV: Hurdle, Monetary, Ridge, RandomFore
+Result charts | Walk-forward NG and RC@10% per context; 
+Interpretation & limits | Hurdle competitive (NG ≈ 0.83 e-com, 0.8
+AI Audit Log | Benchmark and significance-testing promp

@@ -1,0 +1,11 @@
+covariate,treated_mean,control_mean,SMD
+(n clients),99981.0,100058.0,
+(response rate),0.6365,0.6033,"raw uplift=0.0332 [0.0290,0.0375]"
+monetary,8625.7,8569.37,0.0063
+n_transactions,20.19,20.06,0.0073
+avg_basket_value,496.8,494.76,0.0054
+recency_days,5.83,5.83,-0.0002
+tenure_days,91.07,90.83,0.0084
+n_product_lines,114.74,114.04,0.0067
+points_received,79.03,78.61,0.0042
+age,46.53,46.3,0.0046

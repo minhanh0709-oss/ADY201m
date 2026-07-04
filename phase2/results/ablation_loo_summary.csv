@@ -1,0 +1,10 @@
+context,variant,NG_mean,NG_std,dNG_vs_ALL,paired_p
+Online Retail II,ALL,0.8288,0.0557,0.0,
+Online Retail II,ALL-behavioural,0.8291,0.0516,-0.0003,0.9536
+Online Retail II,ALL-semantic,0.8259,0.0481,0.0028,0.5835
+Online Retail II,RFM-only,0.8196,0.0631,0.0092,0.1668
+Dunnhumby,ALL,0.8562,0.015,0.0,
+Dunnhumby,ALL-behavioural,0.8558,0.0148,0.0004,0.0879
+Dunnhumby,ALL-semantic,0.8552,0.0161,0.0011,0.8373
+Dunnhumby,ALL-sequence,0.8356,0.0167,0.0206,0.0011
+Dunnhumby,RFM-only,0.8119,0.0133,0.0444,0.0021

@@ -1,0 +1,33 @@
+context,window,variant,NG
+Online Retail II,W1,ALL,0.8386
+Online Retail II,W1,RFM-only,0.8294
+Online Retail II,W1,ALL-behavioural,0.8307
+Online Retail II,W1,ALL-semantic,0.8339
+Online Retail II,W2,ALL,0.7688
+Online Retail II,W2,RFM-only,0.7522
+Online Retail II,W2,ALL-behavioural,0.7767
+Online Retail II,W2,ALL-semantic,0.7743
+Online Retail II,W3,ALL,0.8789
+Online Retail II,W3,RFM-only,0.8772
+Online Retail II,W3,ALL-behavioural,0.8798
+Online Retail II,W3,ALL-semantic,0.8696
+Dunnhumby,D1,ALL,0.8346
+Dunnhumby,D1,RFM-only,0.795
+Dunnhumby,D1,ALL-behavioural,0.8345
+Dunnhumby,D1,ALL-sequence,0.813
+Dunnhumby,D1,ALL-semantic,0.8325
+Dunnhumby,D2,ALL,0.8685
+Dunnhumby,D2,RFM-only,0.8228
+Dunnhumby,D2,ALL-behavioural,0.8682
+Dunnhumby,D2,ALL-sequence,0.8501
+Dunnhumby,D2,ALL-semantic,0.8586
+Dunnhumby,D3,ALL,0.8637
+Dunnhumby,D3,RFM-only,0.8076
+Dunnhumby,D3,ALL-behavioural,0.8628
+Dunnhumby,D3,ALL-sequence,0.8461
+Dunnhumby,D3,ALL-semantic,0.8589
+Dunnhumby,D4,ALL,0.8581
+Dunnhumby,D4,RFM-only,0.8221
+Dunnhumby,D4,ALL-behavioural,0.8577
+Dunnhumby,D4,ALL-sequence,0.8333
+Dunnhumby,D4,ALL-semantic,0.8706

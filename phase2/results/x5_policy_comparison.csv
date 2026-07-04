@@ -1,0 +1,16 @@
+policy,K,n_targeted,incremental_conversions,incremental_revenue,profit
+Random,10%,6001,129.4,291910.0,-308190.0
+Random,20%,12002,351.5,132712.0,-1067488.0
+Random,30%,18003,488.8,-1223766.0,-3024066.0
+RFM-only,10%,6001,52.0,106004.0,-494096.0
+RFM-only,20%,12002,109.7,1955936.0,755736.0
+RFM-only,30%,18003,249.5,2709754.0,909454.0
+Value-only(CLV proxy),10%,6001,77.3,-49218.0,-649318.0
+Value-only(CLV proxy),20%,12002,263.0,4558873.0,3358673.0
+Value-only(CLV proxy),30%,18003,391.7,5854634.0,4054334.0
+Uplift-only(S-Learner),10%,6001,670.4,1089826.0,489726.0
+Uplift-only(S-Learner),20%,12002,930.1,3230997.0,2030797.0
+Uplift-only(S-Learner),30%,18003,1081.6,3695055.0,1894755.0
+Value-adjusted(uplift x value),10%,6001,248.4,1339577.0,739477.0
+Value-adjusted(uplift x value),20%,12002,451.7,5232658.0,4032458.0
+Value-adjusted(uplift x value),30%,18003,703.8,4956500.0,3156200.0

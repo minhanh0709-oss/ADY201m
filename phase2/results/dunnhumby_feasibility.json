@@ -1,0 +1,34 @@
+{
+  "dataset": "Dunnhumby Complete Journey",
+  "decision": "PASS",
+  "reasons": [
+    "WARNING: degenerate zero-rate for CLV target"
+  ],
+  "stats": {
+    "n_households": 2500,
+    "n_baskets": 276484,
+    "n_transaction_lines": 2595732,
+    "n_products": 92339,
+    "week_min": 1,
+    "week_max": 102,
+    "total_sales_value": 8057463.08,
+    "baskets_per_hh_mean": 110.59,
+    "baskets_per_hh_median": 79.0,
+    "pct_hh_ge_2_baskets": 0.9988,
+    "pct_hh_ge_5_baskets": 0.9908,
+    "pct_hh_ge_10_baskets": 0.9608,
+    "clv_window_obs_end_week": 78,
+    "clv_window_pred_weeks": "79-102",
+    "n_hh_in_observation": 2498,
+    "zero_future_spend_rate": 0.03,
+    "nonzero_future_spend_skew": 2.469,
+    "nonzero_future_spend_mean": 889.58,
+    "nonzero_future_spend_median": 568.9,
+    "n_commodity_desc": 308,
+    "n_sub_commodity_desc": 2383,
+    "n_department": 44,
+    "product_table_rows": 92353,
+    "demographics_coverage": 0.3204,
+    "n_hh_with_demographics": 801
+  }
+}

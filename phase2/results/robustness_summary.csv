@@ -1,0 +1,9 @@
+claim,evidence
+"Hurdle > Monetary (e-com, walk-fwd)","dNG=+0.0030, paired p=0.554"
+"Hurdle vs RandomForest (grocery, walk-fwd)","dNG=-0.0064, paired p=0.063"
+extra features > RFM (e-com),"dNG=+0.0092, paired p=0.1668"
+extra features > RFM (grocery),"dNG=+0.0444, paired p=0.0021"
+semantic adds ranking (e-com),"dNG=+0.0028, paired p=0.5835"
+semantic adds ranking (grocery),"dNG=+0.0011, paired p=0.8373"
+sequence adds ranking (grocery),"dNG=+0.0206, paired p=0.0011"
+S-Learner > Response (uplift Qini),p(diff<=0)=0.000

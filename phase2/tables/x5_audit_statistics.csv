@@ -1,0 +1,13 @@
+metric,value
+raw_uplift,0.0332
+raw_uplift_ci95_hi,0.0375
+raw_uplift_ci95_lo,0.029
+target_rate_control,0.6033
+target_rate_overall,0.6199
+target_rate_treated,0.6365
+train_n_clients,200039
+train_n_control,100058
+train_n_treatment,99981
+treatment_ratio,0.4998
+uplift_signal_significant,True
+value_proxy_available,False

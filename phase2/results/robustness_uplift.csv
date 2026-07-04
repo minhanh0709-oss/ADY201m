@@ -1,0 +1,8 @@
+model,Qini_mean,Qini_CI
+Random,-0.0023,"[-0.0072,0.0029]"
+ResponseModel,-0.0071,"[-0.0117,-0.0018]"
+S-Learner,0.0134,"[0.0082,0.0181]"
+T-Learner,0.0099,"[0.0045,0.0153]"
+ClassTransform,0.0076,"[0.0022,0.013]"
+X-Learner,0.012,"[0.0065,0.017]"
+DIFF S-Learner - Response,0.0205,p(diff<=0)=0.000

@@ -1,0 +1,11 @@
+context,model,NG_mean,NG_CI,RC10_mean,RC10_CI
+online_retail,Hurdle_ALL,0.907,"[0.8521,0.9416]",68.9367,"[54.4514,79.4115]"
+online_retail,Hurdle_RFM,0.889,"[0.8238,0.9292]",68.5112,"[53.1729,79.0684]"
+online_retail,Monetary,0.8803,"[0.8075,0.9256]",68.7789,"[54.1854,79.2297]"
+online_retail,DIFF ALL-RFM (NG),0.018,p(diff<=0)=0.000,,
+online_retail,DIFF Hurdle-Monetary (NG),0.0266,p(diff<=0)=0.000,,
+dunnhumby,Hurdle_ALL,0.8479,"[0.8121,0.8801]",33.7959,"[30.5745,37.0054]"
+dunnhumby,Hurdle_RFM,0.797,"[0.7393,0.8416]",32.7791,"[29.5038,36.2459]"
+dunnhumby,Monetary,0.8148,"[0.7707,0.8516]",32.8265,"[29.4314,36.2682]"
+dunnhumby,DIFF ALL-RFM (NG),0.0509,p(diff<=0)=0.000,,
+dunnhumby,DIFF Hurdle-Monetary (NG),0.0332,p(diff<=0)=0.004,,

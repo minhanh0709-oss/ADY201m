@@ -1,0 +1,124 @@
+\begin{table}[t]\centering
+\caption{Walk-forward CLV benchmark. NG and RC@10 are mean $\pm$ std across temporal windows (Online Retail II on the Phase~1 windows W1--W3, Dunnhumby on D1--D4); Precision@10 is the across-window mean. Results are temporally valid and lie in the same range as the Phase~1 walk-forward benchmark (NG~$\approx$~0.83); small differences follow from the feature set and the window subset.}\label{tab:clvwf}
+\begin{tabular}{lrrrr}
+\hline
+context & model & NG & RC@10 & Prec@10 \\
+\hline
+Online Retail II (W1-W3) & Hurdle & 0.825 $\pm$ 0.050 & 59.037 $\pm$ 9.466 & 0.577 \\
+Online Retail II (W1-W3) & Monetary & 0.822 $\pm$ 0.058 & 60.017 $\pm$ 8.404 & 0.586 \\
+Online Retail II (W1-W3) & RandomForest & 0.805 $\pm$ 0.043 & 56.883 $\pm$ 7.203 & 0.558 \\
+Online Retail II (W1-W3) & Ridge & 0.805 $\pm$ 0.038 & 56.193 $\pm$ 8.234 & 0.547 \\
+Online Retail II (W1-W3) & XGBoost & 0.802 $\pm$ 0.044 & 56.807 $\pm$ 8.818 & 0.540 \\
+Online Retail II (W1-W3) & LightGBM & 0.799 $\pm$ 0.052 & 57.170 $\pm$ 9.850 & 0.547 \\
+Dunnhumby (D1-D4) & RandomForest & 0.862 $\pm$ 0.012 & 34.297 $\pm$ 0.623 & 0.723 \\
+Dunnhumby (D1-D4) & Ridge & 0.858 $\pm$ 0.009 & 34.280 $\pm$ 0.452 & 0.703 \\
+Dunnhumby (D1-D4) & Hurdle & 0.855 $\pm$ 0.014 & 34.280 $\pm$ 0.457 & 0.714 \\
+Dunnhumby (D1-D4) & XGBoost & 0.854 $\pm$ 0.014 & 34.235 $\pm$ 0.923 & 0.738 \\
+Dunnhumby (D1-D4) & LightGBM & 0.849 $\pm$ 0.009 & 34.270 $\pm$ 0.778 & 0.723 \\
+Dunnhumby (D1-D4) & Monetary & 0.825 $\pm$ 0.010 & 32.350 $\pm$ 0.712 & 0.658 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[t]\centering
+\caption{X5 uplift model comparison (RQ3). The response model ranks below random.}\label{tab:uplift}
+\begin{tabular}{lrrrr}
+\hline
+model & Qini\_AUC & AUUC & uplift@10 & uplift@20 \\
+\hline
+S-Learner & 0.014 & 0.020 & 0.112 & 0.077 \\
+X-Learner & 0.012 & 0.018 & 0.104 & 0.072 \\
+T-Learner & 0.010 & 0.015 & 0.087 & 0.069 \\
+ClassTransform & 0.008 & 0.011 & 0.086 & 0.064 \\
+Random & -0.002 & -0.004 & 0.026 & 0.029 \\
+ResponseModel & -0.007 & -0.011 & 0.004 & 0.008 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[t]\centering
+\caption{Targeting policy comparison on X5 (RQ4). The value proxy $\hat V_i$ is pre-period historical monetary spend (a gross-value proxy, not future CLV). Incremental conversions and incremental value are held-out treated-minus-control estimates within each selected top-$K$ set (Eq.~\ref{eq:profit}); the headline uses margin $m=1$, so profit $=$ (incr.\ value) $-$ contact cost with $c=100$ rubles per contact (value and profit in millions of rubles). Across a sensitivity sweep ($m\in\{0.1,0.2,0.3\}$, $c\in\{50,100,200\}$) value-adjusted uplift has the highest point-estimate profit in all nine settings.}\label{tab:policy}
+\begin{tabular}{lrrrr}
+\hline
+policy & K & incr. conv. & incr. value (M) & profit (M) \\
+\hline
+Random & 10\% & 129.4 & 0.29 & -0.31 \\
+Random & 20\% & 351.5 & 0.13 & -1.07 \\
+RFM-only & 10\% & 52.0 & 0.11 & -0.49 \\
+RFM-only & 20\% & 109.7 & 1.96 & 0.76 \\
+Value-only(CLV proxy) & 10\% & 77.3 & -0.05 & -0.65 \\
+Value-only(CLV proxy) & 20\% & 263.0 & 4.56 & 3.36 \\
+Uplift-only(S-Learner) & 10\% & 670.4 & 1.09 & 0.49 \\
+Uplift-only(S-Learner) & 20\% & 930.1 & 3.23 & 2.03 \\
+Value-adjusted(uplift x value) & 10\% & 248.4 & 1.34 & 0.74 \\
+Value-adjusted(uplift x value) & 20\% & 451.7 & 5.23 & 4.03 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[t]\centering
+\caption{Significance of key claims ($\Delta$NG with walk-forward paired $t$-tests for CLV; bootstrap for the uplift Qini comparison). With only 3--4 windows, the CLV tests are robustness diagnostics rather than definitive inference. Only sequence-in-grocery and uplift-vs-response are significant.}\label{tab:robust}
+\begin{tabular}{lrr}
+\hline
+claim & $\Delta$NG & $p$ \\
+\hline
+Hurdle $>$ Monetary (e-com, walk-fwd) & $+0.0030$ & $0.554$ \\
+Hurdle vs RandomForest (grocery, walk-fwd) & $-0.0064$ & $0.063$ \\
+extra features $>$ RFM (e-com) & $+0.0092$ & $0.1668$ \\
+extra features $>$ RFM (grocery) & $+0.0444$ & $0.0021$ \\
+semantic adds ranking (e-com) & $+0.0028$ & $0.5835$ \\
+semantic adds ranking (grocery) & $+0.0011$ & $0.8373$ \\
+sequence adds ranking (grocery) & $+0.0206$ & $0.0011$ \\
+S-Learner $>$ Response (uplift Qini) & -- & $<0.001$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[t]\centering
+\caption{Leave-one-group-out ablation (Hurdle, walk-forward). dNG\_vs\_ALL $>$ 0 means dropping the group hurts; paired\_p is the paired t-test across windows.}\label{tab:ablation}
+\begin{tabular}{lrrrrr}
+\hline
+context & variant & NG\_mean & NG\_std & dNG\_vs\_ALL & paired\_p \\
+\hline
+Online Retail II & ALL & 0.829 & 0.056 & 0.000 & -- \\
+Online Retail II & ALL-behavioural & 0.829 & 0.052 & -0.000 & 0.954 \\
+Online Retail II & ALL-semantic & 0.826 & 0.048 & 0.003 & 0.584 \\
+Online Retail II & RFM-only & 0.820 & 0.063 & 0.009 & 0.167 \\
+Dunnhumby & ALL & 0.856 & 0.015 & 0.000 & -- \\
+Dunnhumby & ALL-behavioural & 0.856 & 0.015 & 0.000 & 0.088 \\
+Dunnhumby & ALL-semantic & 0.855 & 0.016 & 0.001 & 0.837 \\
+Dunnhumby & ALL-sequence & 0.836 & 0.017 & 0.021 & 0.001 \\
+Dunnhumby & RFM-only & 0.812 & 0.013 & 0.044 & 0.002 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[t]\centering
+\caption{Top-10\% targeting overlap between policies, defined as $|A_K\cap B_K|/K$ where $A_K,B_K$ are the top-$K$ customer sets selected by each policy. Value and Uplift select almost disjoint customers (0.007), evidencing that value $\neq$ persuadability.}\label{tab:overlap}
+\begin{tabular}{lrr}
+\hline
+policy\_A & policy\_B & overlap \\
+\hline
+RFM & Value(CLV proxy) & 0.666 \\
+RFM & Uplift(S-Learner) & 0.003 \\
+RFM & Value-adjusted & 0.173 \\
+Value(CLV proxy) & Uplift(S-Learner) & 0.007 \\
+Value(CLV proxy) & Value-adjusted & 0.312 \\
+Uplift(S-Learner) & Value-adjusted & 0.256 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[t]\centering
+\caption{Conformalized quantile regression: empirical coverage and mean interval width per context. Coverage is close to nominal; grocery intervals are tighter, consistent with its lighter tail.}\label{tab:cqr}
+\begin{tabular}{lrrr}
+\hline
+context & nominal\_coverage & empirical\_coverage & mean\_interval\_width \\
+\hline
+Online Retail II & 0.900 & 0.902 & 1,653 \\
+Online Retail II & 0.800 & 0.793 & 1,315 \\
+Dunnhumby & 0.900 & 0.890 & 707 \\
+Dunnhumby & 0.800 & 0.778 & 515 \\
+\hline
+\end{tabular}
+\end{table}

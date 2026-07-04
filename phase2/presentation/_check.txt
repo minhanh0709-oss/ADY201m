@@ -1,0 +1,20 @@
+S1: title='From CLV Ranking to Uplift-Aware Targeting: A Cros' pics=1 tables=0
+S2: title='Outline' pics=0 tables=0
+S3: title='Problem Statement' pics=0 tables=1
+S4: title='Research Questions' pics=0 tables=0
+S5: title='Data Understanding' pics=0 tables=1
+S6: title='Data Understanding - EDA Charts' pics=3 tables=0
+S7: title='SQL Queries — What We Used SQL For ' pics=0 tables=0
+S8: title='SQL — Goals: Representative Queries Linked to RQs\n' pics=0 tables=1
+S9: title='Python Analysis — From Cleaned Data to Models & In' pics=0 tables=0
+S10: title='Analysis with Python' pics=0 tables=1
+S11: title='Visualization — Evidence-Based Insights' pics=3 tables=0
+S12: title='Regression Analysis — Overview' pics=0 tables=0
+S13: title='Regression Analysis (Compare >= 5 Models)' pics=0 tables=1
+S14: title='Regression Results & Interpretation' pics=1 tables=0
+S15: title='Analysis Tool — Dashboard / Report' pics=0 tables=1
+S16: title='Dashboard — Features & Demo' pics=4 tables=0
+S17: title='AI Audit Log' pics=0 tables=0
+S18: title='Human Delta — What the Team Did Beyond AI' pics=0 tables=0
+S19: title='Hallucination Detection' pics=0 tables=0
+S20: title='Q&A + AI Reflection  (20 points)' pics=0 tables=0

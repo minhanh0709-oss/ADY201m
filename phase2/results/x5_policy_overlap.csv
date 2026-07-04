@@ -1,0 +1,13 @@
+K,policy_A,policy_B,overlap
+10%,RFM,Value(CLV proxy),0.666
+10%,RFM,Uplift(S-Learner),0.003
+10%,RFM,Value-adjusted,0.173
+10%,Value(CLV proxy),Uplift(S-Learner),0.007
+10%,Value(CLV proxy),Value-adjusted,0.312
+10%,Uplift(S-Learner),Value-adjusted,0.256
+20%,RFM,Value(CLV proxy),0.726
+20%,RFM,Uplift(S-Learner),0.014
+20%,RFM,Value-adjusted,0.197
+20%,Value(CLV proxy),Uplift(S-Learner),0.029
+20%,Value(CLV proxy),Value-adjusted,0.318
+20%,Uplift(S-Learner),Value-adjusted,0.455

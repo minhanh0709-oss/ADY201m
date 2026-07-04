@@ -1,0 +1,11 @@
+,Online Retail II,Dunnhumby
+n_customers,5038.0,2498.0
+zero_clv_rate,0.4976,0.0701
+mean_clv,814.34,463.0
+median_nonzero_clv,633.48,329.6
+clv_skew_nonzero,16.7,2.54
+mean_frequency,5.39,83.18
+median_frequency,3.0,58.0
+mean_recency_days,178.4,27.9
+mean_product_diversity,71.5,439.2
+mean_taste_diversity,46.3,195.1

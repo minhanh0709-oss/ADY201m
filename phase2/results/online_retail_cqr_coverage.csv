@@ -1,0 +1,3 @@
+nominal_coverage,empirical_coverage,mean_interval_width,q_hat
+0.9,0.9018,1653.48,47.88
+0.8,0.7927,1314.85,32.64

@@ -1,0 +1,27 @@
+# Phase 2 — keep code, results, figures, tables, paper, and the raw data files that
+# fit under GitHub's 100 MB limit. Exclude the giant raw files (download separately,
+# see README "Data acquisition"), intermediate artifacts, and the AI audit log.
+
+# Large raw data (>100 MB) — GitHub rejects these
+data/raw/x5/purchases.csv.gz
+data/raw/dunnhumby/transaction_data.csv
+
+# Intermediate / derived artifacts (reproducible from raw + code)
+data/processed/
+data/windows/
+*.parquet
+*.npz
+*.npy
+__pycache__/
+*.pyc
+
+# AI audit log — submitted via LMS only, not published
+audit/
+
+# LaTeX build
+paper2/*.aux
+paper2/*.bbl
+paper2/*.blg
+paper2/*.log
+paper2/*.out
+paper2/main.pdf

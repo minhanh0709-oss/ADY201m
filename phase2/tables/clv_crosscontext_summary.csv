@@ -1,0 +1,12 @@
+,Online Retail II (e-com),Dunnhumby (grocery)
+best_model,Hurdle,Ridge
+best_NG,0.9118,0.8523
+Hurdle_NG,0.9118,0.8484
+Hurdle_RC@10,70.32,34.14
+Hurdle_Precision@10,0.65,0.78
+best_ablation_variant,ALL,ALL
+best_ablation_NG,0.9118,0.8484
+CQR90_empirical,0.9018,0.89
+CQR90_width,1653.48,707.16
+stage1_top_feature,seq_active_periods,recency_days
+stage2_top_feature,monetary,seq_spend_recent_half

@@ -1,0 +1,111 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,graphicx,hyperref,natbib}
+\title{From CLV Ranking to Uplift-Aware Targeting:\\
+Cross-Context Evidence from Online Retail, Grocery, and Supermarket Campaign Data}
+\author{Group 11}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Customer lifetime value (CLV) models identify \emph{who is valuable}; uplift models identify
+\emph{who is responsive} to marketing. We connect the two across three retail contexts. On
+UK online retail and US grocery data we show an explainable Hurdle--Semantic CLV framework
+transfers across contexts but for \emph{different reasons}: in zero-inflated e-commerce the
+return-incidence stage dominates, while in habitual grocery shopping temporal-sequence signal
+dominates. On the X5 RetailHero campaign data (randomised treatment/control), we show that
+ranking customers by predicted response is \emph{worse than random} for incremental targeting,
+whereas uplift learners recover persuadable customers. Finally, a \emph{value-adjusted uplift}
+score ($\hat\tau_i\cdot\hat V_i$) yields the highest simulated profit under tight budgets,
+though we report transparently that the dollar differences are directional rather than
+statistically significant. CLV tells us who is valuable; uplift tells us who is responsive;
+value-adjusted uplift tells us who is worth targeting.
+\end{abstract}
+
+\section{Introduction}
+CLV studies typically rank high-value customers, while uplift studies rank campaign-responsive
+customers. Yet a high-CLV customer may purchase regardless of intervention, and a mid-value but
+high-uplift customer may be the true ``persuadable''. Limited work systematically connects
+\emph{explainable CLV ranking} with \emph{uplift-aware targeting} across multiple retail contexts.
+We study four questions:
+\begin{itemize}
+  \item[\textbf{RQ1}] How robust is the explainable Hurdle--Semantic CLV framework across UK
+  online retail and US grocery contexts?
+  \item[\textbf{RQ2}] Do semantic product profiles and behavioural sequence features add
+  incremental value beyond RFM for CLV ranking, calibration, and interpretation?
+  \item[\textbf{RQ3}] On campaign data with treatment/control labels, does uplift-aware targeting
+  outperform CLV-only, RFM-only, and response-model targeting?
+  \item[\textbf{RQ4}] Can combining predicted value with uplift improve simulated campaign
+  efficiency, and what transferable principles follow for budget-constrained markets?
+\end{itemize}
+
+\section{Related Work}
+Zero-inflated / heavy-tailed CLV motivates Hurdle and ZILN decompositions \citep{cragg1971hurdle,
+wang2019deep}; sequence features improve CLV \citep{bauer2021improved}; customer embeddings give
+semantic representations \citep{chamberlain2017customer}. Conformalized quantile regression gives
+valid prediction intervals \citep{romano2019cqr}. Uplift modelling estimates incremental treatment
+effect \citep{gutierrez2017uplift}; meta-learners and causal forests estimate heterogeneous
+effects \citep{kunzel2019metalearners,wager2018causalforest}; causal ML supports campaign
+targeting \citep{gubela2024multiple,fader2005rfm}.
+
+\section{Data and Problem Setup}
+\textbf{Online Retail II} (UK e-commerce, Phase~1 baseline, read-only) and \textbf{Dunnhumby
+Complete Journey} (US grocery, external CLV validation) provide CLV ranking; \textbf{X5
+RetailHero} (randomised SMS campaign) provides treatment/control for uplift. We deliberately do
+\emph{not} use Dunnhumby coupon redemption as a causal treatment (it is a post-campaign outcome,
+not clean assignment). CLV target $Y_i=\sum_{t\in\text{horizon}}\text{Revenue}_{i,t}$.
+
+\section{Methodology}
+\textbf{Module A --- CLV ranking (Hurdle).} $\widehat{CLV}_i=p_i\cdot m_i$ with
+$p_i=P(Y_i>0\mid X_i)$ and $m_i=E[Y_i\mid Y_i>0,X_i]$, using a lognormal bias correction.
+\textbf{Module B --- Semantic profiling.} Product co-purchase PPMI $\to$ truncated SVD
+embeddings; customer taste vector = revenue-weighted mean of bought-product embeddings.
+\textbf{Module C --- Uplift.} $\tau_i=E[Y_i(1)-Y_i(0)\mid X_i]$ via S/T/X-Learners and class
+transformation. \textbf{Module D --- Value-adjusted uplift.}
+$\text{Score}^{\text{VU}}_i=\hat\tau_i\cdot\hat V_i$, with $\hat V_i$ a value proxy from
+historical spend (\emph{not} actual future CLV).
+
+\section{Experiments and Results}
+We use a stratified 80/20 split (CLV) and 70/30 split (uplift), seed 42. Metrics: Normalized
+Gini (NG), Revenue Capture@10\% (RC@10), Precision@10\%, decile calibration; Qini AUC, AUUC,
+uplift@K; CQR coverage; bootstrap CIs.
+
+\input{tables_auto}
+
+\textbf{RQ1/RQ2.} Table~\ref{tab:clv_summary}: Hurdle is best on e-commerce (NG$=0.91$) but ties
+a linear model on grocery (NG$=0.85$); extra features beat RFM significantly in both contexts
+(Table~\ref{tab:robust}), with a larger gain in grocery. SHAP shows monetary drives spend in
+e-commerce while recent-sequence spend drives it in grocery; CQR attains valid coverage
+(90\%$\to$90.2\%/89.0\%).
+
+\textbf{RQ3.} Table~\ref{tab:uplift}: the response model ranks \emph{below random} (Qini
+$-0.007$, CI entirely negative), while uplift learners reach $\approx 11\%$ uplift in the top
+decile --- ``likely to buy'' $\neq$ ``persuadable''.
+
+\textbf{RQ4.} Table~\ref{tab:policy}: targeting by value alone can lose money at small budgets;
+uplift-only maximises incremental conversions; value-adjusted uplift gives the highest simulated
+profit at tight budgets. Bootstrap CIs (Table~\ref{tab:robust}) confirm the ranking claims are
+significant, but the \emph{dollar} profit differences are directional, not significant.
+
+\section{Discussion: Transferable Insights}
+(1) Do not target on CLV alone --- it selects ``sure buyers''. (2) Do not target on response
+probability alone --- it selects low-incremental customers. (3) Value-adjusted uplift fits
+budget-constrained settings. (4) Explainability clarifies \emph{why} a customer is selected.
+(5) Uncertainty matters when market data are unstable. These provide transferable design
+principles for budget-constrained emerging retail markets.
+
+\section{Limitations}
+Single train/test split per context (mitigated by bootstrap); X5 value proxy is historical, not
+future, spend; profit differences between policies are not statistically significant; uplift
+absolute Qini is modest (the campaign signal itself is small, $\approx 3.3$pp).
+
+\section{Conclusion}
+Across three retail contexts we connect explainable CLV ranking with uplift-aware targeting. The
+framework transfers but its mechanism is context-dependent, and value-adjusted uplift is the most
+promising targeting rule under budget constraints.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

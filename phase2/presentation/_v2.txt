@@ -1,0 +1,20 @@
+S1 [1img 0tbl] 'From CLV Ranking to Uplift-Aware T' :: Ho Chi Minh City, 2026  —  Phase 2 moves from “who is valuable?” to “who is worth targetin
+S2 [0img 0tbl] 'Outline' ::  | PART 1 — Problem & Data | Problem Statement · Research Questions · Three datasets · SQL
+S3 [0img 1tbl] 'Problem Statement' :: Core logic:  CLV ranks who is valuable  ·  Uplift estimates who is persuadable  ·  Value-a
+S4 [0img 0tbl] 'Research Questions' :: Research Questions (each linked to a SQL query / Python analysis): | [RQ1] Does the Hurdle
+S5 [0img 1tbl] 'Data Understanding' :: 
+S6 [3img 0tbl] 'Data Understanding - EDA Charts' :: Cross-context: e-commerce is sparse & zero-inflated, grocery is denser
+S7 [0img 0tbl] 'SQL Queries — What We Used SQL For' :: SQL (DuckDB) builds transparent, reproducible analytical tables before Python modeling: | 
+S8 [0img 1tbl] 'SQL — Goals: Representative Querie' :: 
+S9 [0img 0tbl] 'Python Analysis — From Cleaned Dat' :: 1 · Clean & Validate
+S10 [0img 1tbl] 'Analysis with Python' :: Key message: different business questions require different metrics.
+S11 [3img 0tbl] 'Visualization — Evidence-Based Ins' :: •  Insight 1 — The response model performs worse than random for incremental targeting (Qi
+S12 [0img 0tbl] 'Regression Analysis — Overview' :: CLV side — the Hurdle model separates purchase incidence from spending amount. | •  Stage 
+S13 [0img 1tbl] 'Regression Analysis (Compare >= 5 ' :: 
+S14 [1img 0tbl] 'Regression Results & Interpretatio' :: Main findings: | •  Hurdle remains competitive, not dominant (NG ≈ 0.825 e-commerce, 0.855
+S15 [0img 1tbl] 'Analysis Tool — Dashboard / Report' :: 
+S16 [4img 0tbl] 'Dashboard — Features & Demo' :: 1 · Customer ranking (CLV + uplift)
+S17 [0img 0tbl] 'AI Audit Log' :: 20 logged sessions (P2-01 – P2-20), each documenting prompt, AI response, evaluation, and 
+S18 [0img 0tbl] 'Human Delta — What the Team Did Be' :: Decisions the team made independently of AI: | •  Do not use Dunnhumby coupon redemption a
+S19 [0img 0tbl] 'Hallucination Detection' :: AI mistakes that were caught and corrected with evidence: | •  Overclaiming the CLV framew
+S20 [0img 0tbl] 'Q&A + AI Reflection  (20 points)' :: Three takeaways: | •  CLV identifies who is valuable. | •  Uplift identifies who is respon
